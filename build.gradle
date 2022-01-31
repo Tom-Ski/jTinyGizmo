@@ -13,6 +13,31 @@ buildscript {
 }
 
 
+ext {
+    gdxVersion = '1.10.1-SNAPSHOT'
+
+    isReleaseBuild = {
+        return project.hasProperty("RELEASE")
+    }
+
+    getReleaseRepositoryUrl = {
+        return project.hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+                : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    }
+
+    getSnapshotRepositoryUrl = {
+        return project.hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+                : "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    getRepositoryUsername = {
+        return project.hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+    }
+
+    getRepositoryPassword = {
+        return project.hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+    }
+}
 
 allprojects {
     repositories {
@@ -20,21 +45,17 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
+
+    version project.getProperty('version') + (isReleaseBuild() ? "" : "-SNAPSHOT")
 }
 
-ext {
-    gdxVersion = '1.10.1-SNAPSHOT'
-}
 
 project("gizmo") {
 
     apply plugin: 'java-library'
     apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
     apply plugin: 'maven-publish'
-
-    group 'com.asidik'
-    version '1.0-SNAPSHOT'
-
+    apply plugin: 'signing'
 
     dependencies {
         api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.1"
@@ -60,29 +81,8 @@ project("gizmo") {
         }
     }
 
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                artifactId = "jtinygizmo"
-                from components.java
+    apply from: "../publish.gradle"
 
-                artifact jnigenJarNativesDesktop { }
-
-            }
-        }
-        repositories {
-            maven {
-                name = "Github"
-                url = "https://maven.pkg.github.com/Tom-Ski/jTinyGizmo"
-
-                credentials {
-                    //findProperty will allow these properties to be absent and still run the build, just won't publish
-                    username = findProperty("GITHUB_USERNAME")
-                    password = findProperty("GITHUB_API_TOKEN")
-                }
-            }
-        }
-    }
 
 }
 
