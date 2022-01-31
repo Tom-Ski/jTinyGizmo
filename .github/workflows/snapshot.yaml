@@ -39,6 +39,8 @@ jobs:
     env:
       ORG_GRADLE_PROJECT_GITHUB_USERNAME: ${{ github.actor }}
       ORG_GRADLE_PROJECT_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
     steps:
       - uses: actions/checkout@v2
@@ -80,7 +82,7 @@ jobs:
         run: ./gradlew jnigen jnigenBuild
       - name: Publish to maven
         if: ${{ github.event_name == 'push' }}
-        run: ./gradlew publish -P${{ secrets.NEXUS_USERNAME }} -P{{ secrets.NEXUS_PASSWORD }}
+        run: ./gradlew publish
       - name: Upload all output libs
         uses: actions/upload-artifact@v2.1.4
         with:
