@@ -64,7 +64,7 @@ project("gizmo") {
 
     jnigen {
         sharedLibName = "jtinygizmo"
-        release = false;
+        
         add(Windows, x32) {
             compilerSuffix = ".exe"
         }
@@ -75,10 +75,10 @@ project("gizmo") {
         add(Linux, x32, ARM)
         add(Linux, x64, ARM)
         add(MacOsX, x64) {
-            cppFlags = "-std=c++14 -c"
+             cppFlags = "-std=c++11 -c"
         }
         add(MacOsX, x64, ARM) {
-            cppFlags = "-std=c++14 -c"
+             cppFlags = "-std=c++11 -c"
         }
     }
 
