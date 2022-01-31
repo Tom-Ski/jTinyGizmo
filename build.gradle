@@ -92,9 +92,9 @@ project("test") {
 
     dist.dependsOn classes
 
+    apply from: "publish.gradle"    
+
 }
 
 
 
-
-apply from: "publish.gradle"
