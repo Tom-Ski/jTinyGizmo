@@ -95,3 +95,6 @@ project("test") {
 }
 
 
+
+
+apply from: "publish.gradle"
