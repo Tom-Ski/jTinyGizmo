@@ -1,0 +1,69 @@
+subprojects
+{
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    afterEvaluate { project ->
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    from components.java
+                    from components.java
+
+                    artifact jnigenJarNativesDesktop { }
+
+                    pom {
+                        name = POM_NAME
+                        description = POM_DESCRIPTION
+                        url = POM_URL
+                        licenses {
+                            license {
+                                name = POM_LICENCE_NAME
+                                url = POM_LICENCE_URL
+                                distribution = POM_LICENCE_DIST
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = "Tomski"
+                                name = "Tom Wojciechowski"
+                                email = "tomwojciechowski@asidik.com"
+                            }
+                        }
+                        scm {
+                            connection = POM_SCM_CONNECTION
+                            developerConnection = POM_SCM_DEV_CONNECTION
+                            url = POM_SCM_URL
+                        }
+                    }
+                }
+            }
+
+            repositories {
+                maven {
+                    url = version.endsWith('SNAPSHOT') ? getSnapshotRepositoryUrl() : getReleaseRepositoryUrl()
+                    
+                    if (getRepositoryUsername() || getRepositoryPassword())
+                    {
+                        credentials {
+                            username = getRepositoryUsername()
+                            password = getRepositoryPassword()
+                        }
+                    }
+                }
+            }
+        }
+
+        signing {
+            useGpgCmd()
+            sign publishing.publications.mavenJava
+        }
+
+        //Simply using "required" in signing block doesn't work because taskGraph isn't ready yet.
+        gradle.taskGraph.whenReady {
+            tasks.withType(Sign) {
+                onlyIf { isReleaseBuild() }
+            }
+        }
+    }
+}
