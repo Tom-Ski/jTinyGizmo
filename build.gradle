@@ -55,6 +55,8 @@ project("gizmo") {
     apply plugin: 'java-library'
     apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
 
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
         api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.1"
