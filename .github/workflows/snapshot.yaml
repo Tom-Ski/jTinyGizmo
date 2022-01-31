@@ -80,7 +80,7 @@ jobs:
         run: ./gradlew jnigen jnigenBuild
       - name: Publish to maven
         if: ${{ github.event_name == 'push' }}
-        run: ./gradlew publish
+        run: ./gradlew publish -P${{ secrets.NEXUS_USERNAME }}
       - name: Upload all output libs
         uses: actions/upload-artifact@v2.1.4
         with:
