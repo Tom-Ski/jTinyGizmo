@@ -17,9 +17,13 @@ publishing {
     }
     repositories {
         maven {
+            name = "Github"
+            url = "https://maven.pkg.github.com/Tom-Ski/jTinyGizmo"
 
             credentials {
-
+                //findProperty will allow these properties to be absent and still run the build, just won't publish
+                username = findProperty("GITHUB_USERNAME")
+                password = findProperty("GITHUB_API_TOKEN")
             }
         }
     }
