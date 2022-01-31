@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+    dependencies {
+        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.2.1"
+    }
+}
+
+group 'com.asidik'
+version '1.0-SNAPSHOT'
+
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+ext {
+    gdxVersion = '1.10.1-SNAPSHOT'
+}
+
+project("gizmo") {
+    apply plugin: 'java-library'
+    apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.1"
+    }
+
+
+    jnigen {
+        sharedLibName = "jtinygizmo"
+        release = false;
+        add(Windows, x32) {
+            compilerSuffix = ".exe"
+        }
+        add(Windows, x64) {
+            compilerSuffix = ".exe"
+        }
+        add(Linux, x64)
+        add(Linux, x32, ARM)
+        add(Linux, x64, ARM)
+        add(MacOsX, x64)
+        add(MacOsX, x64, ARM)
+        add(Android)
+        add(IOS)
+    }
+}
+
+project("test") {
+    apply plugin: 'java-library'
+
+
+    sourceSets.main.resources.srcDirs = ["assets"]
+
+    dependencies {
+
+        api project(":gizmo")
+        api fileTree(dir: '../gizmo/build/libs', include: '*.jar')
+
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+
+
+    task dist(type: Jar) {
+        dependsOn configurations.runtimeClasspath
+        from {
+            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+        with jar
+
+        manifest {
+            attributes 'Main-Class': 'com.asidik.tinygizmo.LwjglTest'
+        }
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        archiveBaseName = "desktop"
+    }
+
+    dist.dependsOn classes
+
+}
+
+
