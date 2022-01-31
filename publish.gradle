@@ -5,6 +5,9 @@ afterEvaluate { project ->
     publishing {
         publications {
             mavenJava(MavenPublication) {
+
+                artifactId = 'jtinygizmo'
+
                 from components.java
 
                 artifact jnigenJarNativesDesktop { }
