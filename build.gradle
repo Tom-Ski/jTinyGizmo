@@ -31,6 +31,7 @@ ext {
 project("gizmo") {
     apply plugin: 'java-library'
     apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
+    apply plugin: 'maven-publish'
 
     dependencies {
         api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.1"
@@ -56,6 +57,30 @@ project("gizmo") {
             cppFlags = "-std=c++14 -c"
         }
     }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+
+                artifact jnigenJarNativesDesktop { }
+
+            }
+        }
+        repositories {
+            maven {
+                name = "Github"
+                url = "https://maven.pkg.github.com/Tom-Ski/jTinyGizmo"
+
+                credentials {
+                    //findProperty will allow these properties to be absent and still run the build, just won't publish
+                    username = findProperty("GITHUB_USERNAME")
+                    password = findProperty("GITHUB_API_TOKEN")
+                }
+            }
+        }
+    }
+
 }
 
 project("test") {
@@ -92,7 +117,6 @@ project("test") {
 
     dist.dependsOn classes
 
-    apply from: "../publish.gradle"    
 
 }
 
