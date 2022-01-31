@@ -54,8 +54,7 @@ project("gizmo") {
 
     apply plugin: 'java-library'
     apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
-    apply plugin: 'maven-publish'
-    apply plugin: 'signing'
+
 
     dependencies {
         api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.1"
@@ -81,9 +80,7 @@ project("gizmo") {
         }
     }
 
-    apply from: "../publish.gradle"
-
-
+    apply from: rootProject.file('publish.gradle')
 }
 
 project("test") {
@@ -122,6 +119,4 @@ project("test") {
 
 
 }
-
-
 
