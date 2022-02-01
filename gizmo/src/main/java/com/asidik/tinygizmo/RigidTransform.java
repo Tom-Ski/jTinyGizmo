@@ -5,7 +5,6 @@ public class RigidTransform {
 
 	/*JNI
 		#include "tiny-gizmo.hpp"
-		#include <iostream>
 
 		using namespace tinygizmo;
 		using namespace minalg;
