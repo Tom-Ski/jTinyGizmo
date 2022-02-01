@@ -41,10 +41,10 @@ project("gizmo") {
         sharedLibName = "jtinygizmo"
         release = false;
         add(Windows, x32) {
-            compilerSuffix = ".exe"
+//            compilerSuffix = ".exe"
         }
         add(Windows, x64) {
-            compilerSuffix = ".exe"
+//            compilerSuffix = ".exe"
         }
         add(Linux, x64)
         add(Linux, x32, ARM)
