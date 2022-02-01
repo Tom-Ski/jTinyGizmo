@@ -1,30 +1,67 @@
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-group = 'com.asidik'
+afterEvaluate { project ->
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
+                artifactId = 'jtinygizmo'
 
-            artifact jnigenJarNativesDesktop { }
-            artifact jnigenJarNativesIOS { }
+                from components.java
 
-            ['arm64-v8a', 'armeabi-v7a', 'armeabi', 'x86_64', 'x86'].each { id ->
-                artifact "jnigenJarNativesAndroid${id}" { }
+                artifact jnigenJarNativesDesktop { }
+
+                pom {
+                    name = POM_NAME
+                    description = POM_DESCRIPTION
+                    url = POM_URL
+                    licenses {
+                        license {
+                            name = POM_LICENCE_NAME
+                            url = POM_LICENCE_URL
+                            distribution = POM_LICENCE_DIST
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "Tomski"
+                            name = "Tom Wojciechowski"
+                            email = "tomwojciechowski@asidik.com"
+                        }
+                    }
+                    scm {
+                        connection = POM_SCM_CONNECTION
+                        developerConnection = POM_SCM_DEV_CONNECTION
+                        url = POM_SCM_URL
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                url = version.endsWith('SNAPSHOT') ? getSnapshotRepositoryUrl() : getReleaseRepositoryUrl()
+                
+                if (getRepositoryUsername() || getRepositoryPassword()) {
+                    credentials {
+                        username = getRepositoryUsername()
+                        password = getRepositoryPassword()
+                    }
+                }
             }
         }
     }
-    repositories {
-        maven {
-            name = "Github"
-            url = "https://maven.pkg.github.com/Tom-Ski/jTinyGizmo"
 
-            credentials {
-                //findProperty will allow these properties to be absent and still run the build, just won't publish
-                username = findProperty("GITHUB_USERNAME")
-                password = findProperty("GITHUB_API_TOKEN")
-            }
+    signing {
+        useGpgCmd()
+        sign publishing.publications.mavenJava
+    }
+
+    //Simply using "required" in signing block doesn't work because taskGraph isn't ready yet.
+    gradle.taskGraph.whenReady {
+        tasks.withType(Sign) {
+            onlyIf { isReleaseBuild() }
         }
     }
 }
