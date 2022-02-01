@@ -27,6 +27,14 @@ public class RigidTransform {
 		return (jlong)transform;
 	*/
 
+	public native void setPosition (float x, float y, float z);/*
+		rigid_transform* transform = (rigid_transform*)addr;
+		auto pos = transform->position;
+		pos.x = x;
+		pos.y = y;
+		pos.z = z;
+	*/
+
 
 	public float[] getPosition () {
 		jniGetPosition(addr, position);
