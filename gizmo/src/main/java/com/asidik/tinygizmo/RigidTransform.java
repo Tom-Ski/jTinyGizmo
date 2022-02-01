@@ -5,6 +5,7 @@ public class RigidTransform {
 
 	/*JNI
 		#include "tiny-gizmo.hpp"
+		#include <iostream>
 
 		using namespace tinygizmo;
 		using namespace minalg;
@@ -34,10 +35,9 @@ public class RigidTransform {
 
 	private native void setPosition (long addr, float x, float y, float z);/*
 		rigid_transform* transform = (rigid_transform*)addr;
-		auto pos = transform->position;
-		pos.x = x;
-		pos.y = y;
-		pos.z = z;
+		transform->position.x = x;
+		transform->position.y = y;
+		transform->position.z = z;
 	*/
 
 
@@ -48,10 +48,9 @@ public class RigidTransform {
 
 	private native void jniGetPosition (long addr, float[] out);/*
 		rigid_transform* transform = (rigid_transform*)addr;
-		auto pos = transform->position;
-		out[0] = pos.x;
-		out[1] = pos.y;
-		out[2] = pos.z;
+		out[0] = transform->position.x;
+		out[1] = transform->position.y;
+		out[2] = transform->position.z;
 	*/
 
 	public float[] getOrientation () {
@@ -62,10 +61,10 @@ public class RigidTransform {
 	private native void jniGetOrientation (long addr, float[] out);/*
 		rigid_transform* transform = (rigid_transform*)addr;
 		auto orientation = transform->orientation;
-		out[0] = orientation.x;
-		out[1] = orientation.y;
-		out[2] = orientation.z;
-		out[3] = orientation.w;
+		out[0] = transform->orientation.x;
+		out[1] = transform->orientation.y;
+		out[2] = transform->orientation.z;
+		out[3] = transform->orientation.w;
 	*/
 
 	public float[] getScale () {
@@ -75,9 +74,8 @@ public class RigidTransform {
 
 	private native void jniGetScale (long addr, float[] out);/*
 		rigid_transform* transform = (rigid_transform*)addr;
-		auto scale = transform->scale;
-		out[0] = scale.x;
-		out[1] = scale.y;
-		out[2] = scale.z;
+		out[0] = transform->scale.x;
+		out[1] = transform->scale.y;
+		out[2] = transform->scale.z;
 	*/
 }
