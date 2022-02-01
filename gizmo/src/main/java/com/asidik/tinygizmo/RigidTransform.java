@@ -27,7 +27,12 @@ public class RigidTransform {
 		return (jlong)transform;
 	*/
 
-	public native void setPosition (float x, float y, float z);/*
+
+	public void setPosition (float x, float y, float z) {
+		setPosition(addr, x, y, z);
+	}
+
+	private native void setPosition (long addr, float x, float y, float z);/*
 		rigid_transform* transform = (rigid_transform*)addr;
 		auto pos = transform->position;
 		pos.x = x;
