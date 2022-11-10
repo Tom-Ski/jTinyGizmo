@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.2.2-SNAPSHOT"
+        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.3.1"
     }
 }
 
@@ -59,7 +59,7 @@ project("gizmo") {
     targetCompatibility = 1.8
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.2-SNAPSHOT"
+        api "com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1"
     }
 
     jnigen {
