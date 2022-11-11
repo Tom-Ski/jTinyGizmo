@@ -62,6 +62,31 @@ project("gizmo") {
         api "com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1"
     }
 
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test) {
+        systemProperty 'file.encoding', 'UTF-8'
+    }
+
+    javadoc {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+
+    task packageSources(type: Jar, dependsOn: [classes, jar]) {
+        from sourceSets.main.resources.srcDirs
+    }
+
+    artifacts {
+        api(jar, packageSources)
+    }
+
     jnigen {
         sharedLibName = "jtinygizmo"
         
