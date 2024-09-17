@@ -123,6 +123,7 @@ project("test") {
 
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.talosvfx:talos-libgdx:2.0.0-SNAPSHOT"
     }
 
 
