@@ -50,19 +50,7 @@ jobs:
       ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
+      - name: Install dependencies into minimal dockerfile
         run: |
           # ubuntu dockerfile is very minimal (only 122 packages are installed)
           # need to install updated git (from official git ppa)
@@ -87,6 +75,20 @@ jobs:
           echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
           echo "LANGUAGE=en_US.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=en_US.UTF-8" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
       - name: Download macOS/iOS natives
         uses: actions/download-artifact@v3
         with:
