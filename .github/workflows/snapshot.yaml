@@ -34,7 +34,7 @@ jobs:
           /usr/bin/xcodebuild -version
           ./gradlew jnigen jnigenBuild
       - name: Upload macOS/iOS natives
-        uses: actions/upload-artifact@v2.1.4
+        uses: actions/upload-artifact@v3
         with:
           name: macos-natives
           path: gizmo/libs
@@ -78,7 +78,7 @@ jobs:
       - name: Install Linux arm64 compilers/libraries
         run: sudo apt-get -yq install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
       - name: Download macOS/iOS natives
-        uses: actions/download-artifact@v2.0.5
+        uses: actions/download-artifact@v3
         with:
           name: macos-natives
           path: gizmo/libs
