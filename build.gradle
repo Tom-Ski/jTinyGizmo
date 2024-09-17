@@ -98,16 +98,16 @@ project("gizmo") {
         addWindows(x64, x86) {
 //            compilerSuffix = ".exe"
         }
-        addLinux(x64, x86)
+//        addLinux(x64, x86)
 //        addLinux(x32, x86)
-        addLinux(x64, ARM)
+//        addLinux(x64, ARM)
 
-        addMac(x64, x86) {
-             cppFlags += " -std=c++11"
-        }
-         addMac(x64, ARM) {
-              cppFlags += " -std=c++11 -c"
-         }
+//        addMac(x64, x86) {
+//             cppFlags += " -std=c++11"
+//        }
+//         addMac(x64, ARM) {
+//              cppFlags += " -std=c++11 -c"
+//         }
     }
 
     apply from: rootProject.file('publish.gradle')
