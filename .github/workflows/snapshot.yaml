@@ -5,6 +5,7 @@ on:
     branches: [ master ]
 env:
   GRADLE_USER_HOME: .gradle
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   macos:
@@ -39,7 +40,9 @@ jobs:
 
   linux:
     needs: macos
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    container:
+      image: ubuntu:18.04
     env:
       ORG_GRADLE_PROJECT_GITHUB_USERNAME: ${{ github.actor }}
       ORG_GRADLE_PROJECT_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
