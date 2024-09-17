@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.3.1"
+        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:3.0.0-ANTKILLER-SNAPSHOT"
     }
 }
 
@@ -59,7 +59,7 @@ project("gizmo") {
     targetCompatibility = 1.8
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1"
+        api "com.badlogicgames.gdx:gdx-jnigen-loader:3.0.0-ANTKILLER-SNAPSHOT"
     }
 
     java {
@@ -89,20 +89,23 @@ project("gizmo") {
 
     jnigen {
         sharedLibName = "jtinygizmo"
-        
-        add(Windows, x32) {
+
+        all {
+            headerDirs += ["GizmoSource"]
+            cppIncludes += ["GizmoSource/*.cpp"]
+        }
+
+        addWindows(x64, x86) {
 //            compilerSuffix = ".exe"
         }
-        add(Windows, x64) {
-//            compilerSuffix = ".exe"
-        }
-        add(Linux, x64)
-        add(Linux, x32, ARM)
-        add(Linux, x64, ARM)
-        add(MacOsX, x64) {
+        addLinux(x64, x86)
+        addLinux(x32, x86)
+        addLinux(x64, ARM)
+
+        addMac(x64, x86) {
              cppFlags += " -std=c++11"
         }
-         add(MacOsX, x64, ARM) {
+         addMac(x64, ARM) {
               cppFlags += " -std=c++11 -c"
          }
     }

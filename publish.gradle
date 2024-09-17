@@ -10,7 +10,7 @@ afterEvaluate { project ->
 
                 from components.java
 
-                artifact jnigenJarNativesDesktop { }
+//                artifact jnigenJarNativesDesktop { }
 
                 pom {
                     name = POM_NAME
