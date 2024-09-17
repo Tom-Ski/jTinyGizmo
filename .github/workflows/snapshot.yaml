@@ -90,7 +90,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: ./gradlew publish
       - name: Upload all output libs
-        uses: actions/upload-artifact@v2.1.4
+        uses: actions/upload-artifact@v3
         with:
           name: output-libs
           path: gizmo/build/libs/
