@@ -75,7 +75,7 @@ jobs:
           zip natives-linux -@ < native-files-list
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: natives-linux.zip
           path: natives-linux.zip
@@ -110,7 +110,7 @@ jobs:
           zip natives-mac -@ < native-files-list
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: natives-mac.zip
           path: natives-mac.zip
@@ -124,7 +124,7 @@ jobs:
 
       - name: Download Artifacts from linux
         if: success() && needs.build-linux.result == 'success'
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: natives-linux.zip
 
@@ -132,7 +132,7 @@ jobs:
         run: unzip -o natives-linux.zip
       - name: Download Artifacts from mac
         if: success() && needs.build-mac.result == 'success'
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: natives-mac.zip
 
