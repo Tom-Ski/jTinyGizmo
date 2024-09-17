@@ -99,7 +99,7 @@ project("gizmo") {
 //            compilerSuffix = ".exe"
         }
         addLinux(x64, x86)
-        addLinux(x32, x86)
+//        addLinux(x32, x86)
         addLinux(x64, ARM)
 
         addMac(x64, x86) {
