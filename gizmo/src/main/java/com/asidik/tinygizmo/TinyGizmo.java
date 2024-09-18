@@ -121,6 +121,10 @@ public class TinyGizmo {
 		gizmo_ctx.update(gizmo_state);
 	*/
 
+	public native void setScreenSpaceScale (float screenSpaceScale);/*
+		gizmo_state.screenspace_scale = screenSpaceScale;
+	*/
+
 
 	public boolean transformGizmo (String name, RigidTransform rigidTransform) {
 		return transformGizmo(name, rigidTransform.addr);
