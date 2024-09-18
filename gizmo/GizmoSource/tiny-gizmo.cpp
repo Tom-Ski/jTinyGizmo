@@ -358,7 +358,7 @@ float scale_screenspace(gizmo_context::gizmo_context_impl & g, const float3 posi
     float dist = length(position - g.active_state.cam.position);
     float scaleResponse = std::tan(g.active_state.cam.yfov) * dist * (pixel_scale / g.active_state.viewport_size.y);
 
-    std::cout << "Position: " << position << std::endl;
+    std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
     std::cout << "Pixel Scale: " << pixel_scale << std::endl;
     std::cout << "Distance: " << dist << std::endl;
     //fov viewport size
