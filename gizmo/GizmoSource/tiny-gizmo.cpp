@@ -356,7 +356,17 @@ void gizmo_context::gizmo_context_impl::draw()
 float scale_screenspace(gizmo_context::gizmo_context_impl & g, const float3 position, const float pixel_scale)
 {
     float dist = length(position - g.active_state.cam.position);
-    return std::tan(g.active_state.cam.yfov) * dist * (pixel_scale / g.active_state.viewport_size.y);
+    float scaleResponse = std::tan(g.active_state.cam.yfov) * dist * (pixel_scale / g.active_state.viewport_size.y);
+
+    std::cout << "Position: " << position << std::endl;
+    std::cout << "Pixel Scale: " << pixel_scale << std::endl;
+    std::cout << "Distance: " << dist << std::endl;
+    //fov viewport size
+    std::cout << "FOV: " << g.active_state.cam.yfov << std::endl;
+    std::cout << "Viewport Size: " << g.active_state.viewport_size.y << std::endl;
+    std::cout << "Scale Response: " << scaleResponse << std::endl;
+
+    return scaleResponse;
 }
 
 // The only purpose of this is readability: to reduce the total column width of the intersect(...) statements in every gizmo
