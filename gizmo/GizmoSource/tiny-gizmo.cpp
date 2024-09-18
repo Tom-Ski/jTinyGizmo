@@ -357,15 +357,7 @@ float scale_screenspace(gizmo_context::gizmo_context_impl & g, const float3 posi
 {
     float dist = length(position - g.active_state.cam.position);
     float scaleResponse = std::tan(g.active_state.cam.yfov) * dist * (pixel_scale / g.active_state.viewport_size.y);
-
-    std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
-    std::cout << "Pixel Scale: " << pixel_scale << std::endl;
-    std::cout << "Distance: " << dist << std::endl;
     //fov viewport size
-    std::cout << "FOV: " << g.active_state.cam.yfov << std::endl;
-    std::cout << "Viewport Size: " << g.active_state.viewport_size.y << std::endl;
-    std::cout << "Scale Response: " << scaleResponse << std::endl;
-
     return scaleResponse;
 }
 
@@ -467,7 +459,7 @@ void axis_translation_dragger(const uint32_t id, gizmo_context::gizmo_context_im
 void position_gizmo(const std::string & name, gizmo_context::gizmo_context_impl & g, const float4 & orientation, float3 & position)
 {
     rigid_transform p = rigid_transform(g.local_toggle ? orientation : float4(0, 0, 0, 1), position);
-    const float draw_scale = (g.active_state.screenspace_scale > 0.f) ? scale_screenspace(g, p.position, g.active_state.screenspace_scale) : 1.f;
+    const float draw_scale = g.active_state.screenspace_scale;
     const uint32_t id = hash_fnv1a(name);
 
     // interaction_mode will only change on clicked
@@ -559,7 +551,7 @@ void orientation_gizmo(const std::string & name, gizmo_context::gizmo_context_im
     assert(length2(orientation) > float(1e-6));
 
     rigid_transform p = rigid_transform(g.local_toggle ? orientation : float4(0, 0, 0, 1), center); // Orientation is local by default
-    const float draw_scale = (g.active_state.screenspace_scale > 0.f) ? scale_screenspace(g, p.position, g.active_state.screenspace_scale) : 1.f;
+    const float draw_scale = g.active_state.screenspace_scale;
     const uint32_t id = hash_fnv1a(name);
 
     // interaction_mode will only change on clicked
@@ -698,7 +690,7 @@ void axis_scale_dragger(const uint32_t & id, gizmo_context::gizmo_context_impl &
 void scale_gizmo(const std::string & name, gizmo_context::gizmo_context_impl & g, const float4 & orientation, const float3 & center, float3 & scale)
 {
     rigid_transform p = rigid_transform(orientation, center);
-    const float draw_scale = (g.active_state.screenspace_scale > 0.f) ? scale_screenspace(g, p.position, g.active_state.screenspace_scale) : 1.f;
+    const float draw_scale = g.active_state.screenspace_scale;
     const uint32_t id = hash_fnv1a(name);
 
     if (g.has_clicked) g.gizmos[id].interaction_mode = interact::none;
