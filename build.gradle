@@ -59,7 +59,7 @@ project("gizmo") {
     targetCompatibility = 1.8
 
     dependencies {
-        compileOnly "com.badlogicgames.jnigen:jnigen-loader:3.1.1"
+        implementation "com.badlogicgames.jnigen:jnigen-loader:3.1.1"
     }
 
     java {
