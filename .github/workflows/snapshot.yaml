@@ -55,7 +55,7 @@ jobs:
           unzip android-ndk.zip
           echo "NDK_HOME=$HOME/android-ndk/android-ndk-r25c" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
@@ -91,7 +91,7 @@ jobs:
           sudo xcode-select -switch /Applications/Xcode.app
           /usr/bin/xcodebuild -version
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
@@ -126,7 +126,7 @@ jobs:
       NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
     needs: [ build-linux, build-mac ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Download Artifacts from linux
         if: success() && needs.build-linux.result == 'success'
