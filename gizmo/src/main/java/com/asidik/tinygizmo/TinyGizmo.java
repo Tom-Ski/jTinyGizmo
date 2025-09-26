@@ -1,6 +1,7 @@
 package com.asidik.tinygizmo;
 
-import com.badlogic.gdx.utils.SharedLibraryLoader;
+
+import com.badlogic.gdx.jnigen.loader.SharedLibraryLoader;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
