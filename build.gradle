@@ -103,10 +103,10 @@ project("gizmo") {
         addLinux(x64, ARM)
 
         addMac(x64, x86) {
-             cppFlags += " -std=c++11"
+             cppFlags += ["-std=c++14"]
         }
          addMac(x64, ARM) {
-              cppFlags += " -std=c++11 -c"
+              cppFlags += ["-std=c++14", "-c"]
          }
     }
 
