@@ -95,8 +95,16 @@ jobs:
       ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
     needs: [ build-linux, build-mac ]
+
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
       - name: Download Artifacts from linux
         if: success() && needs.build-linux.result == 'success'
