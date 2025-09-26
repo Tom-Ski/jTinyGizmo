@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:3.0.0-ANTKILLER-SNAPSHOT"
+        classpath "com.badlogicgames.jnigen:jnigen-gradle:3.1.1"
     }
 }
 
@@ -53,13 +53,13 @@ allprojects {
 project("gizmo") {
 
     apply plugin: 'java-library'
-    apply plugin: 'com.badlogicgames.gdx.gdx-jnigen'
+    apply plugin: 'com.badlogicgames.jnigen.jnigen-gradle'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx-jnigen-loader:3.0.0-ANTKILLER-SNAPSHOT"
+        compileOnly "com.badlogicgames.jnigen:jnigen-loader:3.1.1"
     }
 
     java {
@@ -113,41 +113,41 @@ project("gizmo") {
     apply from: rootProject.file('publish.gradle')
 }
 
-project("test") {
-    apply plugin: 'java-library'
-
-
-    sourceSets.main.resources.srcDirs = ["assets"]
-
-    dependencies {
-
-        api project(":gizmo")
-        api fileTree(dir: '../gizmo/build/libs', include: '*.jar')
-
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.talosvfx:talos-libgdx:2.0.0-SNAPSHOT"
-    }
-
-
-    task dist(type: Jar) {
-        dependsOn configurations.runtimeClasspath
-        from {
-            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-        }
-        with jar
-
-        manifest {
-            attributes 'Main-Class': 'com.asidik.tinygizmo.LwjglTest'
-        }
-
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-        archiveBaseName = "desktop"
-    }
-
-    dist.dependsOn classes
-
-
-}
-
+//project("test") {
+//    apply plugin: 'java-library'
+//
+//
+//    sourceSets.main.resources.srcDirs = ["assets"]
+//
+//    dependencies {
+//
+//        api project(":gizmo")
+//        api fileTree(dir: '../gizmo/build/libs', include: '*.jar')
+//
+//        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+//        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+//        api "com.talosvfx:talos-libgdx:2.0.0-SNAPSHOT"
+//    }
+//
+//
+//    task dist(type: Jar) {
+//        dependsOn configurations.runtimeClasspath
+//        from {
+//            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//        }
+//        with jar
+//
+//        manifest {
+//            attributes 'Main-Class': 'com.asidik.tinygizmo.LwjglTest'
+//        }
+//
+//        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//
+//        archiveBaseName = "desktop"
+//    }
+//
+//    dist.dependsOn classes
+//
+//
+//}
+//
